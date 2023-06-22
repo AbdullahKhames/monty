@@ -1,85 +1,61 @@
 #include "monty.h"
 #include <string.h>
 #include <stdlib.h>
-/**
- * line_bringer - assigns the line var for get_line
- * @lineptr: Buffer that store the input str
- * @buffer: str that is been called to line
- * @n: size of line
- * @ind: size of buffer
- */
+
 void line_bringer(char **lineptr, size_t *n, char *buffer, size_t ind)
 {
+    if (*lineptr == NULL || *n < ind)
+    {
+        if (ind > BUFSIZE)
+            *n = ind;
+        else
+            *n = BUFSIZE;
 
-	if (*lineptr == NULL)
-	{
-		if  (ind > BUFSIZE)
-			*n = ind;
+        *lineptr = realloc(*lineptr, *n * sizeof(char));
+    }
 
-		else
-			*n = BUFSIZE;
-		*lineptr = buffer;
-	}
-	else if (*n < ind)
-	{
-		if (ind > BUFSIZE)
-			*n = ind;
-		else
-			*n = BUFSIZE;
-		*lineptr = buffer;
-	}
-	else
-	{
-		strcpy(*lineptr, buffer);
-		free(buffer);
-	}
+    memcpy(*lineptr, buffer, ind);
+    free(buffer);
 }
-/**
- * get_line - Read inpt from stream
- * @lineptr: buffer that stores the input
- * @n: size of lineptr
- * @stream: stream to read from
- * Return: The number of bytes
- */
+
 ssize_t get_line(char **lineptr, size_t *n, FILE *stream)
 {
-	int ind;
-	static ssize_t input;
-	ssize_t retval;
-	char *buffer;
-	char t = 'z';
+    ssize_t ind;
+    ssize_t retval;
+    char *buffer;
+    static ssize_t input = 0;
 
-	if (input == 0)
-		fflush(stream);
-	else
-		return (-1);
-	input = 0;
+    if (input != 0)
+        return -1;
 
-	buffer = malloc(sizeof(char) * BUFSIZE);
-	if (buffer == 0)
-		return (-1);
-	while (t != '\n')
-	{
-		ind = read(STDIN_FILENO, &t, 1);
-		if (ind == -1 || (ind == 0 && input == 0))
-		{
-			free(buffer);
-			return (-1);
-		}
-		if (ind == 0 && input != 0)
-		{
-			input++;
-			break;
-		}
-		if (input >= BUFSIZE)
-			buffer = realloc(buffer, input + 1);
-		buffer[input] = t;
-		input++;
-	}
-	buffer[input] = '\0';
-	line_bringer(lineptr, n, buffer, input);
-	retval = input;
-	if (ind != 0)
-		input = 0;
-	return (retval);
+    buffer = malloc(BUFSIZE * sizeof(char));
+    if (buffer == NULL)
+        return -1;
+
+    ind = 0;
+    while (ind < BUFSIZE - 1)
+    {
+        int c = fgetc(stream);
+        if (c == EOF)
+        {
+            if (ind == 0)
+            {
+                free(buffer);
+                return -1;
+            }
+            break;
+        }
+
+        buffer[ind++] = c;
+        if (c == '\n')
+            break;
+    }
+
+    buffer[ind] = '\0';
+    line_bringer(lineptr, n, buffer, ind);
+    retval = ind;
+
+    input = 0;
+
+    return retval;
 }
