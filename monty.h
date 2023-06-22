@@ -8,6 +8,7 @@
 #define STACK 0
 #define QUEUE 1
 #define DELIMS " \n\t\a\b"
+#define BUFSIZE 1024
 
 /* GLOBAL OPCODE TOKENS */
 extern char **op_toks;
@@ -85,5 +86,6 @@ int pint_error(unsigned int ln_no);
 int short_stack_error(unsigned int ln_no, char *op);
 int div_error(unsigned int ln_no);
 int pchar_error(unsigned int ln_no, char *message);
-
+void line_bringer(char **lineptr, size_t *n, char *buffer, size_t ind);
+ssize_t get_line(char **lineptr, size_t *n, FILE *stream);
 #endif /* __MONTY_H__ */

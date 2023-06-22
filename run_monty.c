@@ -1,9 +1,15 @@
 #include "monty.h"
 #include <string.h>
+#include <stdio.h>
 
+void free_tokens(void);
+unsigned int token_arr_len(void);
+int is_empty_line(char *line, char *delims);
+void (*get_op_func(char *opcode))(stack_t**, unsigned int);
+int run_monty(FILE *script_fd);
 
 /**
- * free_tokens - Frees the global op_toks array of strings.
+ * free_tokens - Frees op_toks array of strings.
  */
 void free_tokens(void)
 {
@@ -19,17 +25,17 @@ void free_tokens(void)
 }
 
 /**
- * token_arr_len - Gets the length of current op_toks.
+ * token_arr_len - length of op_toks.
  *
  * Return: Length of current op_toks (as int).
  */
 unsigned int token_arr_len(void)
 {
-	unsigned int toks_len = 0;
+	unsigned int len = 0;
 
-	while (op_toks[toks_len])
-		toks_len++;
-	return (toks_len);
+	while (op_toks[len])
+		len++;
+	return (len);
 }
 
 /**
@@ -42,13 +48,13 @@ unsigned int token_arr_len(void)
  */
 int is_empty_line(char *line, char *delims)
 {
-	int i, j;
+	int idx, j;
 
-	for (i = 0; line[i]; i++)
+	for (idx = 0; line[idx]; idx++)
 	{
 		for (j = 0; delims[j]; j++)
 		{
-			if (line[i] == delims[j])
+			if (line[idx] == delims[j])
 				break;
 		}
 		if (delims[j] == '\0')
@@ -86,12 +92,12 @@ void (*get_op_func(char *opcode))(stack_t**, unsigned int)
 		{"queue", queue_monty},
 		{NULL, NULL}
 	};
-	int i;
+	int idx;
 
-	for (i = 0; op_funcs[i].opcode; i++)
+	for (idx = 0; op_funcs[idx].opcode; idx++)
 	{
-		if (strcmp(opcode, op_funcs[i].opcode) == 0)
-			return (op_funcs[i].f);
+		if (strcmp(opcode, op_funcs[idx].opcode) == 0)
+			return (op_funcs[idx].f);
 	}
 
 	return (NULL);
@@ -114,7 +120,7 @@ int run_monty(FILE *script_fd)
 	if (init_stack(&stack) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 
-	while (getline(&line, &len, script_fd) != -1)
+	while (get_line(&line, &len, script_fd) != -1)
 	{
 		line_number++;
 		op_toks = strtow(line, DELIMS);

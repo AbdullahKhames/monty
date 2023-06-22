@@ -1,8 +1,8 @@
 #include "monty.h"
 
 /**
- * push_monty - Pushes a value to a stack_t linked list.
- * @stack: A pointer to the top mode node of a stack_t linked list.
+ * push_monty - Pushes to stack.
+ * @stack: A pointer to the top stack_t linked list.
  * @ln_no: The current working line number of a Monty bytecodes file.
  */
 void push_monty(stack_t **stack, unsigned int ln_no)
@@ -56,24 +56,24 @@ void push_monty(stack_t **stack, unsigned int ln_no)
 }
 
 /**
- * pall_monty - Prints the values of a stack_t linked list.
+ * pall_monty - Prints values stack_t linked list.
  * @stack: A pointer to the top mode node of a stack_t linked list.
  * @ln_no: The current working line number of a Monty bytecodes file.
  */
 void pall_monty(stack_t **stack, unsigned int ln_no)
 {
-	stack_t *tmp = (*stack)->next;
+	stack_t *current = (*stack)->next;
 
-	while (tmp)
+	while (current)
 	{
-		printf("%d\n", tmp->n);
-		tmp = tmp->next;
+		printf("%d\n", current->n);
+		current = current->next;
 	}
 	(void)ln_no;
 }
 
 /**
- * pint_monty - Prints the top value of a stack_t linked list.
+ * pint_monty - Prints the top value of the stack.
  * @stack: A pointer to the top mode node of a stack_t linked list.
  * @ln_no: The current working line number of a Monty bytecodes file.
  */
@@ -90,7 +90,7 @@ void pint_monty(stack_t **stack, unsigned int ln_no)
 
 
 /**
- * pop_monty - Removes the top value element of a stack_t linked list.
+ * pop_monty - Removes the top value element of a stack
  * @stack: A pointer to the top mode node of a stack_t linked list.
  * @ln_no: The current working line number of a Monty bytecodes file.
  */
@@ -112,7 +112,7 @@ void pop_monty(stack_t **stack, unsigned int ln_no)
 }
 
 /**
- * swap_monty - Swaps the top two value elements of a stack_t linked list.
+ * swap_monty - Swaps the top two value elements of a stack
  * @stack: A pointer to the top mode node of a stack_t linked list.
  * @ln_no: The current working line number of a Monty bytecodes file.
  */
