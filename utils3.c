@@ -56,3 +56,22 @@ void pstr_monty(stack_t **stack, unsigned int ln_no)
 	(void)ln_no;
 }
 
+/**
+ * queue_mode_monty - converts stack to queue
+ * @stack: pointer to first node
+ * @temp: pointer to temp node
+ */
+void queue_mode_monty(stack_t *stack, stack_t *temp)
+{
+	if (stack == NULL || temp == NULL)
+	{
+		set_op_tok_error(malloc_error());
+		return;
+	}
+	tmp = stack;
+	while (tmp->next)
+		tmp = tmp->next;
+	new->prev = tmp;
+	new->next = NULL;
+	tmp->next = new;
+}
