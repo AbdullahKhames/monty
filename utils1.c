@@ -43,7 +43,8 @@ void push_monty(stack_t **stack, unsigned int ln_no)
 	}
 	else /* QUEUE mode insert at end */
 	{
-		queue_mode_monty(stack, tmp);
+		tmp = *stack;
+		queue_mode_monty(*stack, new,tmp);
 	}
 }
 /**
