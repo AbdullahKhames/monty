@@ -16,13 +16,11 @@ void push_monty(stack_t **stack, unsigned int ln_no)
 		set_op_tok_error(malloc_error());
 		return;
 	}
-
 	if (op_toks[1] == NULL)
 	{
 		set_op_tok_error(no_int_error(ln_no));
 		return;
 	}
-
 	for (i = 0; op_toks[1][i]; i++)
 	{
 		if (op_toks[1][i] == '-' && i == 0)
@@ -34,7 +32,6 @@ void push_monty(stack_t **stack, unsigned int ln_no)
 		}
 	}
 	new->n = atoi(op_toks[1]);
-
 	if (check_mode(*stack) == STACK) /* STACK mode insert at front */
 	{
 		tmp = (*stack)->next;
@@ -46,15 +43,9 @@ void push_monty(stack_t **stack, unsigned int ln_no)
 	}
 	else /* QUEUE mode insert at end */
 	{
-		tmp = *stack;
-		while (tmp->next)
-			tmp = tmp->next;
-		new->prev = tmp;
-		new->next = NULL;
-		tmp->next = new;
+		queue_mode_monty(stack, tmp);
 	}
 }
-
 /**
  * pall_monty - Prints values stack_t linked list.
  * @stack: A pointer to the top mode node of a stack_t linked list.

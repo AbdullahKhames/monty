@@ -70,7 +70,7 @@ void rotl_monty(stack_t **stack, unsigned int ln_no);
 void rotr_monty(stack_t **stack, unsigned int ln_no);
 void stack_monty(stack_t **stack, unsigned int ln_no);
 void queue_monty(stack_t **stack, unsigned int ln_no);
-
+void queue_mode_monty(stack_t *stack, stack_t *temp);
 /* CUSTOM STANDARD LIBRARY FUNCTIONS */
 char **strtow(char *str, char *delims);
 char *get_int(int n);

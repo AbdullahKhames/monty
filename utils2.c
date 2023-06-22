@@ -23,7 +23,7 @@ void add_monty(stack_t **stack, unsigned int ln_no)
 }
 
 /**
- * sub_monty - Subtracts the second value from the top of
+ * sub_monty - Subtracts the top of
  *             a stack_t linked list by the top value.
  * @stack: A pointer to the top mode node of a stack_t linked list.
  * @ln_no: The current working line number of a Monty bytecodes file.
